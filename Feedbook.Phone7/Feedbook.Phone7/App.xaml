@@ -1,0 +1,102 @@
+﻿<Application
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:auto="clr-namespace:Feedbook.Phone7.Automation"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:Feedbook.Phone7.Views"
+    xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit"
+    xmlns:ic="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
+    mc:Ignorable="d" 
+    x:Class="Feedbook.Phone7.App"
+    >
+    <!--Application Resources-->
+    <Application.Resources>
+        <sys:String x:Key="AppTitle">FEEDBOOK</sys:String>
+
+        <auto:UriToBitmapImageConverter x:Key="UriToBitmapImageConverter"/>
+        <auto:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <auto:FriendlyDateTimeConverter x:Key="FriendlyDateTimeConverter"/>
+        <auto:UriToImageBrushConverter x:Key="UriToImageBrushConverter"/>
+
+        <auto:ContentPreviewConverter x:Key="ContentPreviewConverter"/>
+        <auto:ContentToPainTextConverter x:Key="ContentToPainTextConverter"/>
+        <auto:ContentToTextBlockConverter x:Key="ContentToTextBlockConverter"/>
+        <auto:FlashEnclosuresConverter x:Key="FlashEnclosuresConverter"/>
+        <auto:ImageEnclosuresConverter x:Key="ImageEnclosuresConverter"/>
+        <auto:EnclosureToBitmapImageConverter x:Key="EnclosureToBitmapImageConverter"/>
+        <auto:StringToLowerConverter x:Key="StringToLowerConverter"/>
+        <auto:EllipsisConverter x:Key="EllipsisConverter"/>
+
+
+        <ControlTemplate x:Key="TransparentButtonTemplate" TargetType="Button">
+            <ContentPresenter/>
+        </ControlTemplate>
+
+        <DataTemplate x:Key="ChannelItemTemplate">
+            <TextBlock Text="{Binding Title.ToPlainText}" Margin="0"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ChannelFullModeTemplate">
+            <TextBlock Text="{Binding Title.ToPlainText}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilyLight}" Margin="0,10"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ChannelSelectTemplate">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox/>
+                <TextBlock Text="{Binding Title.ToPlainText}" FontSize="{StaticResource PhoneFontSizeLarge}" VerticalAlignment="Center"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="FeedTemplate">
+            <Button Template="{StaticResource TransparentButtonTemplate}" Margin="0,20">
+                <StackPanel>
+                    <Grid>
+                        <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextTitle3Style}" Foreground="{StaticResource PhoneAccentBrush}" TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeMediumLarge}"  Visibility="{Binding IsReaded, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}"/>
+                        <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextTitle3Style}" TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeMediumLarge}"  Visibility="{Binding IsReaded, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    </Grid>
+                    <!--<TextBlock Text="{Binding TextDescription, Converter={StaticResource EllipsisConverter}, ConverterParameter=200}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap"/>-->
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Text="{Binding Updated, Converter={StaticResource FriendlyDateTimeConverter}}" Style="{StaticResource PhoneTextSubtleStyle}" HorizontalAlignment="Left" Margin="12,0,0,0"/>
+                        <TextBlock Text="{Binding Author.Name, StringFormat=' by \{0\}'}" Style="{StaticResource PhoneTextSubtleStyle}" HorizontalAlignment="Left" Margin="0,0,12,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Button>
+        </DataTemplate>
+
+        <DataTemplate x:Key="CategoryFullModeTemplate">
+            <StackPanel Margin="0,10" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <TextBlock Text="{Binding Category}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilyLight}"/>             
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="CategoryItemTemplate">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <TextBlock Text="{Binding Category}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="CategorySelectTemplate">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding IsPinned}"/>
+                <TextBlock Text="{Binding Category}" FontSize="{StaticResource PhoneFontSizeLarge}" VerticalAlignment="Center"/>
+            </StackPanel>
+        </DataTemplate>
+
+    </Application.Resources>
+
+    <!--<Application.RootVisual>
+        <phone:PhoneApplicationFrame x:Name="RootFrame"  Source="/Views/MainPage.xaml"   Template="{StaticResource TransitioningFrame}"  />
+    </Application.RootVisual>-->
+
+    <Application.ApplicationLifetimeObjects>
+        <!--Required object that handles lifetime events for the application-->
+        <shell:PhoneApplicationService 
+            Launching="Application_Launching" Closing="Application_Closing" 
+            Activated="Application_Activated" Deactivated="Application_Deactivated"/>
+    </Application.ApplicationLifetimeObjects>
+
+</Application>

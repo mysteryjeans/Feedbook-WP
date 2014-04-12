@@ -1,0 +1,36 @@
+﻿<UserControl 
+    x:Class="Feedbook.Phone7.Views.Subscriptions"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:auto="clr-namespace:Feedbook.Phone7.Automation"
+    xmlns:view="clr-namespace:Feedbook.Phone7.Views"
+    xmlns:scm="clr-namespace:System.ComponentModel;assembly=System.Windows"
+    xmlns:b="clr-namespace:Feedbook.Phone7.Behaviors"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480">
+
+    <UserControl.Resources>
+        <CollectionViewSource x:Name="FeedViewSource">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription Direction="Descending" PropertyName="Updated"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>    
+    </UserControl.Resources>
+    <Grid x:Name="ContentGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <toolkit:ListPicker x:Name="SubscriptionsListBox" Grid.Row="0" FullModeHeader="Subscriptions" ExpansionMode="FullscreenOnly" SelectionChanged="SubscriptionsListBox_SelectionChanged" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{StaticResource PhoneAccentBrush}" Margin="0" ItemTemplate="{StaticResource ChannelItemTemplate}" FullModeItemTemplate="{StaticResource ChannelFullModeTemplate}"/>
+        <Grid Grid.Row="1">
+            <ListBox x:Name="FeedListBox" ItemTemplate="{StaticResource FeedTemplate}"/>
+        </Grid>
+    </Grid>
+</UserControl>
